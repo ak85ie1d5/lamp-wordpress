@@ -1,17 +1,16 @@
 #!/bin/bash
 
-
 cd /var/www/html || exit
-
-if [ ! -d "public" ]; then
-  ln -s "${PWD}/${GIT_FOLDER}" "${PWD}/public"
-fi
-
-cd /var/www/html/public || exit
-
 
 # Docker entrypoint for Bedrock only
 if [ "${CMS}" == "bedrock" ]; then
+
+  if [ ! -d "public" ]; then
+    ln -s "${PWD}/${GIT_FOLDER}/web" "${PWD}/public"
+  fi
+
+  cd /var/www/html/"${GIT_FOLDER}" || exit
+
   # Check if .env` file exist
   if [ ! -f ".env" ]; then
 
@@ -30,7 +29,9 @@ if [ "${CMS}" == "bedrock" ]; then
          sed -i "s/WP_ENV='development'/WP_ENV='production'/" .env
         fi
 
-        sed -i "s/WP_HOME='http://example.com'/WP_HOME=\'${WP_HOME}\'/" .env
+        escaped_WP_HOME=$(printf '%s\n' "${WP_HOME}" | sed -e 's/[\/&]/\\&/g')
+        sed -i "s/WP_HOME='http:\/\/example.com'/WP_HOME='${escaped_WP_HOME}'/" .env
+        # sed -i "s/WP_HOME='http://example.com'/WP_HOME=\'${WP_HOME}\'/" .env
 
         sed -i "s/AUTH_KEY='generateme'/AUTH_KEY=\'${AUTH_KEY}\'/" .env
         sed -i "s/SECURE_AUTH_KEY='generateme'/SECURE_AUTH_KEY=\'${SECURE_AUTH_KEY}\'/" .env
@@ -46,6 +47,13 @@ fi
 
 # Docker entrypoint for Wordpress only
 if [ "${CMS}" == "wordpress" ]; then
+
+  if [ ! -d "public" ]; then
+    ln -s "${PWD}/${GIT_FOLDER}" "${PWD}/public"
+  fi
+
+  cd /var/www/html/public || exit
+
   # Check if `wp-config.php` file exist
   if [ ! -f "wp-config.php" ]; then
 
