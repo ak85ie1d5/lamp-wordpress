@@ -50,13 +50,14 @@ Informations à reprendre du serveur en production :
     ```shell
     $ docker-compose build
     ```
+6. (Optionnel) Il est possible de lancer un conteneur avec l'image de NodeJS. Retirer les **#** dans le fichier `docker-composer.yml`, puis préciser le numéro de version de NodeJS désiré.
 
-6. Lancer les conteneurs Docker :
+7. Lancer les conteneurs Docker :
     ```shell
     $ docker-compose up -d
     ```
 
-7. (Optionnel - pour Bedrock uniquement) Entrer dans le conteneur **webserver** et installer Bedrock :
+8. (Optionnel - pour Bedrock uniquement) Entrer dans le conteneur **webserver** et installer Bedrock :
     ```shell
     $ docker exec -ti mon_site-webserver-1 bash
     # dans le conteneur mon_site-webserver-1
@@ -64,7 +65,7 @@ Informations à reprendre du serveur en production :
     $ composer install
     ```
 
-8. (Optionnel - s'il faut remplacer l'URL du site dans la base de données) Entrer dans le conteneur **webserver** et lancer la commande suivante pour rechercher et remplacer l'URL du site en production par une URL pour le développement :
+9. (Optionnel - s'il faut remplacer l'URL du site dans la base de données) Entrer dans le conteneur **webserver** et lancer la commande suivante pour rechercher et remplacer l'URL du site en production par une URL pour le développement :
     ```shell
     $ docker exec -ti mon_site-webserver-1 bash
     # dans le conteneur mon_site-webserver-1
@@ -72,6 +73,6 @@ Informations à reprendre du serveur en production :
     $ wp search-replace 'http://example.com' 'http://example.test' --recurse-objects --skip-columns=guid --skip-tables=wp_users
     ```
 
-9. Récupérer les medias depuis le serveur de production (ou de pré-production) :
+10. Récupérer les medias depuis le serveur de production (ou de pré-production) :
     - Pour Wordpress `/mon_site/wp-content/uploads`
     - Pour Bedrock `/mon_site/web/app/uploads`

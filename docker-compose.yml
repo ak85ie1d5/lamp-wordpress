@@ -40,5 +40,16 @@ services:
       - PMA_USER=${DB_USER}
       - PMA_PASSWORD=${DB_PASSWORD}
       - UPLOAD_LIMIT=200M
+#  node:
+#    image: "node:9.8.0"
+#    user: "node"
+#    working_dir: /home/node/app
+#    environment:
+#      - NODE_ENV=development
+#    volumes:
+#      - ./:/home/node/app
+#    expose:
+#      - "6081"
+#    command: "tail -f /dev/null"
 volumes:
   mariadb:
