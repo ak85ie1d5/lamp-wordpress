@@ -23,6 +23,7 @@ Informations à reprendre du serveur en production :
 
     ...
     ```
+Pour utiliser **MySQL** à la place de **MariaDB**, modifier le fichier `docker-compose.yml` en décommettant les lignes propres à **MySQL** et en commentant (supprimant) celles qui font référence à **MariaDB**.
 
 ## Installation
 

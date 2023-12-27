@@ -28,6 +28,18 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
       - ./Docker/mariadb/database:/docker-entrypoint-initdb.d
+  #mysql:
+  # build:
+  #   context: .
+  #   dockerfile: Docker/mysql/Dockerfile
+  # environment:
+  #   - MYSQL_DATABASE=${DB_NAME}
+  #   - MYSQL_USER=${DB_USER}
+  #   - MYSQL_PASSWORD=${DB_PASSWORD}
+  #   - MYSQL_RANDOM_ROOT_PASSWORD='yes'
+  # volumes:
+  #   - mysql:/var/lib/mysql
+  #   - ./Docker/mysql/database:/docker-entrypoint-initdb.d
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
     depends_on:
@@ -40,16 +52,17 @@ services:
       - PMA_USER=${DB_USER}
       - PMA_PASSWORD=${DB_PASSWORD}
       - UPLOAD_LIMIT=200M
-#  node:
-#    image: "node:9.8.0"
-#    user: "node"
-#    working_dir: /home/node/app
-#    environment:
-#      - NODE_ENV=development
-#    volumes:
-#      - ./:/home/node/app
-#    expose:
-#      - "6081"
-#    command: "tail -f /dev/null"
+  #node:
+  #  image: "node:13.7.0"
+  #  user: "node"
+  #  working_dir: /home/node/app
+  #  environment:
+  #    - NODE_ENV=development
+  #  volumes:
+  #    - ./:/home/node/app
+  #  expose:
+  #    - "6081"
+  #  command: "tail -f /dev/null"
 volumes:
   mariadb:
+  #mysql
