@@ -15,7 +15,7 @@ if [ "${CMS}" == "bedrock" ]; then
   if [ ! -f ".env" ]; then
 
         # Create `.env` file for Bedrock from `.env.example`
-        cp ../Docker/webserver/.env.example .env
+        cp "${OLDPWD}"/Docker/webserver/.env.example .env
 
         # Search and replace default values with those found in `.env` file.
         sed -i "s/DB_NAME='database_name'/DB_NAME=\'${DB_NAME}\'/" .env
@@ -31,7 +31,6 @@ if [ "${CMS}" == "bedrock" ]; then
 
         escaped_WP_HOME=$(printf '%s\n' "${WP_HOME}" | sed -e 's/[\/&]/\\&/g')
         sed -i "s/WP_HOME='http:\/\/example.com'/WP_HOME='${escaped_WP_HOME}'/" .env
-        # sed -i "s/WP_HOME='http://example.com'/WP_HOME=\'${WP_HOME}\'/" .env
 
         sed -i "s/AUTH_KEY='generateme'/AUTH_KEY=\'${AUTH_KEY}\'/" .env
         sed -i "s/SECURE_AUTH_KEY='generateme'/SECURE_AUTH_KEY=\'${SECURE_AUTH_KEY}\'/" .env
@@ -58,7 +57,7 @@ if [ "${CMS}" == "wordpress" ]; then
   if [ ! -f "wp-config.php" ]; then
 
       # Create `wp-config.php` file from `wp-config-sample.php`
-      cp ../Docker/webserver/wp-config-sample.php wp-config.php
+      cp "${OLDPWD}"/Docker/webserver/wp-config-sample.php wp-config.php
 
       # Search and replace default values by **getenv()** function to get values in `.env` file.
       sed -i "s/define('DB_NAME', 'votre_nom_de_bdd');/define( 'DB_NAME', getenv('DB_NAME'));/" wp-config.php
