@@ -10,7 +10,7 @@ Environnement LAMP pour WordPress et Bedrock propulsé par docker-compose
 - (Optionnel) NodeJS
 
 Informations à reprendre du serveur en production :
-- La version de PHP. Modifier le fichier `/Docker/webserver/Dockerfile` comme dans l'exemple (pour utiliser PHP 8.2 avec Apache) :
+- La version de PHP. Modifier le fichier `/Docker/php/Dockerfile` comme dans l'exemple (pour utiliser PHP 8.2 avec Apache) :
     ```dockerfile
     FROM php:8.2-apache
 
@@ -43,7 +43,7 @@ Pour utiliser **MySQL** à la place de **MariaDB**, modifier le fichier `docker-
     $ cp .env.sample .env
     $ nano .env
     ```
-   Pour la variable `WP_HOME`, il faut ajouter le numéro de port HTTP ou HTTPS utilisé par le conteneur **webserver**.
+   Pour la variable `WP_HOME`, il faut ajouter le numéro de port HTTP ou HTTPS utilisé par le conteneur **php**.
 
 4. Exporter la base de données du site depuis le serveur de production (ou de pré-production), puis enregistrer le fichier dans `/Docker/mariadb/database/`.
 
@@ -58,18 +58,18 @@ Pour utiliser **MySQL** à la place de **MariaDB**, modifier le fichier `docker-
     $ docker-compose up -d
     ```
 
-8. (Optionnel - pour Bedrock uniquement) Entrer dans le conteneur **webserver** et installer Bedrock :
+8. (Optionnel - pour Bedrock uniquement) Entrer dans le conteneur **php** et installer Bedrock :
     ```shell
-    $ docker exec -ti mon_site-webserver-1 bash
-    # dans le conteneur mon_site-webserver-1
+    $ docker exec -ti mon_site-php-1 bash
+    # dans le conteneur mon_site-php-1
     $ cd my-wordpress-project
     $ composer install
     ```
 
-9. (Optionnel - s'il faut remplacer l'URL du site dans la base de données) Entrer dans le conteneur **webserver** et lancer la commande suivante pour rechercher et remplacer l'URL du site en production par une URL pour le développement :
+9. (Optionnel - s'il faut remplacer l'URL du site dans la base de données) Entrer dans le conteneur **php** et lancer la commande suivante pour rechercher et remplacer l'URL du site en production par une URL pour le développement :
     ```shell
-    $ docker exec -ti mon_site-webserver-1 bash
-    # dans le conteneur mon_site-webserver-1
+    $ docker exec -ti mon_site-php-1 bash
+    # dans le conteneur mon_site-php-1
     $ cd my-wordpress-project
     $ wp search-replace 'http://example.com' 'http://example.test' --recurse-objects --skip-columns=guid --skip-tables=wp_users
     ```
