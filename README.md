@@ -75,5 +75,15 @@ Pour utiliser **MySQL** à la place de **MariaDB**, modifier le fichier `docker-
     ```
 
 10. Récupérer les medias depuis le serveur de production (ou de pré-production) :
-    - Pour Wordpress `/mon_site/wp-content/uploads`
-    - Pour Bedrock `/mon_site/web/app/uploads`
+
+Les médias se trouvent dans le dossier `/mon_site/wp-content/uploads` dans le cas d'une WordPress classique et dans `/mon_site/web/app/uploads` dans le cas de Bedrock.
+
+Il est possible d'afficher les medias dans le navigateur sans les récupérer en local. Pour cela, il suffit d'ajouter les instructions dans le fichier `.htacess` à la racine du site :
+```apacheconf
+RewriteCond %{HTTP_HOST} ^www\.mon_site\.local$ [NC]
+# WordPress classique
+RewriteRule ^wp-content/uploads/(.*)\.(jpg|jpeg|png|gif|svg|pdf)$ https://www.mon_site.fr/wp-content/uploads/$1.$2 [R=301,L]
+# Bedrock
+RewriteRule ^web/app/uploads/(.*)\.(jpg|jpeg|png|gif|svg|pdf)$ https://www.mon_site.fr/web/app/uploads/$1.$2 [R=301,L]
+```
+Dans cet exemple **www.mon_site.local** et le nom de domaine local et **www.mon_site.fr** est le site en production.
