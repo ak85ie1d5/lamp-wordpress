@@ -82,8 +82,8 @@ Il est possible d'afficher les medias dans le navigateur sans les récupérer en
 ```apacheconf
 RewriteCond %{HTTP_HOST} ^www\.mon_site\.local$ [NC]
 # WordPress classique
-RewriteRule ^wp-content/uploads/(.*)\.(jpg|jpeg|png|gif|svg|pdf)$ https://www.mon_site.fr/wp-content/uploads/$1.$2 [R=301,L]
+RewriteRule ^wp-content/uploads/(.*)\.(jpg|jpeg|png|gif|svg|pdf|webp|mp4)$ https://www.mon_site.fr/wp-content/uploads/$1.$2 [R=301,L]
 # Bedrock
-RewriteRule ^web/app/uploads/(.*)\.(jpg|jpeg|png|gif|svg|pdf)$ https://www.mon_site.fr/web/app/uploads/$1.$2 [R=301,L]
+RewriteRule ^app/uploads/(.*)\.(jpg|jpeg|png|gif|svg|pdf|webp|mp4)$ https://www.mon_site.fr/app/uploads/$1.$2 [R=301,L]
 ```
 Dans cet exemple **www.mon_site.local** et le nom de domaine local et **www.mon_site.fr** est le site en production.
